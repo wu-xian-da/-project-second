@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.ps.dao.system.UsersDao">
+	
+	<sql id="userColumns">
+		a.id id,
+		a.username username,
+		a.password password,
+		a.nickname nickname,
+		a.gender gender,
+		a.age age,
+		a.create_time createTime,
+		a.login_time loginTime,
+		a.ip ip
+	</sql>
+	
+	<!-- <resultMap type="com.jianfei.ps.entity.system.Users" id="roleMap">
+		<id property="id" column="id"/>
+		<result property="nickname" column="nickname"/>
+		<collection column="role_id" property="roles" ofType="string" select="findRoleByRoleId"></collection>
+	</resultMap> -->
+	
+	<!-- <resultMap type="com.jianfei.ps.entity.system.Users" id="userMap">
+		<id property="id" column="id"/>
+		<result property="nickname" column="nickname"/>
+		<collection column="user_id" property="userId" ofType="int" select="findUserId"></collection>
+	</resultMap> -->
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_users (username,password,nickname,gender,age,create_time)
+		values (#{username},#{password},#{nickname},#{gender},#{age},#{createTime})
+	</insert>
+	
+	<!-- 用户与角色关联 -->
+	<insert id="insertUserRoleId">
+		insert into sys_user_role (user_id,role_id) values (#{0},#{1})
+	</insert>
+	
+	<update id="updateLoginTimeAndIp">
+		update sys_users a set a.login_time = #{loginTime},a.ip = #{ip} where a.id = #{id}
+	</update>
+	
+	<update id="update">
+		update sys_users set 
+		username = #{username},
+		password = #{password},
+		nickname = #{nickname},
+		gender = #{gender},
+		age = #{age}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_users where id = #{id}
+	</delete>
+	
+	<select id="findAll" resultType="com.jianfei.ps.entity.system.Users">
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a
+		ORDER BY a.id asc
+	</select>
+	
+	<select id="findById" resultType="com.jianfei.ps.entity.system.Users" parameterType="java.lang.Integer">
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a WHERE a.id = #{id}
+	</select>
+	
+	<select id="findUsersByNickname" resultType="com.jianfei.ps.entity.system.Users" >
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a WHERE a.nickname = #{nickname}
+	</select>
+	
+	<select id="findCondition" resultType="com.jianfei.ps.entity.system.Users">
+		select <include refid="userColumns" />,
+		r.role_name AS "role.rolename"
+	    from sys_users a
+	    LEFT JOIN sys_roles r ON a.role_id=r.id
+	    where 1=1
+    	<if test="null != username and '' != username">and a.username like CONCAT('%',#{username},'%')</if>
+	    <if test="null != nickname and '' != nickname">and a.nickname like CONCAT('%',#{nickname},'%') </if>
+        <if test="null != gender">and a.gender = #{gender}</if>
+        <if test="null != beginCreateTime and '' != beginCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and '' != endCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc , a.gender asc
+	</select>
+	
+	<select id="findUserId">
+		select * from sys_user_role ur
+		ORDER BY ur.id asc
+	</select>
+	
+	<select id="findRoleByRoleId" resultType="string">
+		select r.role_name from sys_roles r where r.id = #{role_id}
+	</select>
+</mapper>
