@@ -5,8 +5,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src=""></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systems.js"></script>
 <title>用户列表</title>
 <style>
 	.td{
@@ -85,18 +86,4 @@
 		</c:forEach>
 	</table>
 </body>
-
-<script type="text/javascript" src="js/jquery-2.0.0.js"></script>
-<script type="text/javascript">
-$(function(){
-	$(".deleteuser").click(function(){
-		var name = $(this).next(":hidden").val();
-		var flag = confirm("确定删除"+name);
-		if (flag) {
-			return true;
-		}
-		return false;
-	});
-});
-</script>
 </html>

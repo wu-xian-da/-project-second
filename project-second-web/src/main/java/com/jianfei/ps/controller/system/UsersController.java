@@ -104,6 +104,7 @@ public class UsersController{
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
 	public String delete(@PathVariable("id") int id){
 		int result = this.usersService.delete(id);
+		this.userRoleSerivce.delete(id);
 		if (result > 0) {
 			System.out.println("删除成功");
 		} else {

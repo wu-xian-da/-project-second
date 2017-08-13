@@ -5,18 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.0.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systems.js"></script>
+<title>用户</title>
+<style type="text/css">
+	.td1{
+		width: 50px;
+	}
+	.tr1{
+		height: 50px;
+	}
+</style>
 </head>
 <body>
 	<div>
 		<h2>${empty users.id ? "新增" : "编辑" }用户</h2><hr/>
-		<form method="post">
+		<form method="post" onsubmit="return validator(this)">
 		<input type="hidden" name="id" value="${users.id }">
-		<table>
-			<tr><td>姓名：</td><td><input type="text" name="username" value="${users.username}" placeholder="姓名"></td></tr>
-			<tr><td>密码：</td><td><input type="password" name="password" value="${users.password}" placeholder="密码"></td></tr>
-			<tr><td>昵称：</td><td><input type="text" name="nickname" value="${users.nickname}" placeholder="昵称"></td></tr>
-			<tr><td>性别：</td>
+		<table width="1100px">
+			<tr class="tr1"><td class="td1">姓名：</td><td><input id="usernamevalid" type="text" name="username" value="${users.username}" maxlength="10" valid="required"  errmsg="姓名不能为空!" placeholder="姓名"><span id="errusername"></span></td></tr>
+			<tr class="tr1"><td class="td1">密码：</td><td><input id="passwordvalid" type="password" name="password" value="${users.password}" maxlength="10" valid="required"  errmsg="密码不能为空!" placeholder="密码"><span id="errpassword1"></span><span id="errpassword2"></span></td></tr>
+			<tr class="tr1"><td class="td1">昵称：</td><td><input id="nicknamevalid" type="text" name="nickname" value="${users.nickname}" maxlength="10" valid="required"  errmsg="昵称不能为空!" placeholder="昵称"><span id="errnickname"></span></td></tr>
+			<tr class="tr1"><td class="td1">性别：</td>
 				<td>
 				<c:forEach items="${gender}" var="gender">
 					<c:choose>
@@ -30,8 +42,8 @@
 				</c:forEach>
 				</td>
 			</tr>
-			<tr><td>年龄：</td><td><input type="text" name="age" value="${users.age}" placeholder="年龄"></td></tr>
-			<tr><td>角色：</td>
+			<tr class="tr1"><td class="td1">年龄：</td><td><input id="useragevalid" type="text" name="age" value="${users.age}" maxlength="10" valid="required"  errmsg="年龄不能为空!" placeholder="年龄"><span id="errage1"></span><span id="errage2"></span></td></tr>
+			<tr class="tr1"><td class="td1">角色：</td>
 				<td>
 				
 					<c:choose>
@@ -62,7 +74,7 @@
 					</c:choose>
 				</td>
 			</tr>
-			<tr>
+			<tr class="tr1">
 				<td><button type="submit" id="usersubmit">${empty users.id ? "新增" : "编辑"}</button></td>
 				<td><button type="button" onclick="javascript:history.back();">返回</button></td>
 			</tr>
@@ -70,6 +82,4 @@
 		</form>
 	</div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jsp.js"></script>
 </html>

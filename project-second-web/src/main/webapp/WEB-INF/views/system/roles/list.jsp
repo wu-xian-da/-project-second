@@ -6,12 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systems.js"></script>
 <title>用户列表</title>
 <style>
 	.td{
 		text-align: center;
 	}
-	.userclass{
+	.roleclass{
 		text-align: left
 	}
 </style>
@@ -41,7 +44,7 @@
 			<td>${r.id}</td>
 			<td>${r.rolename}</td>
 			<td>${r.counts}</td>
-			<td class="userclass">
+			<td class="roleclass">
 				<c:forEach items="${userRole}" var="ru">
 				<c:if test="${ru.roleId eq r.id}">
 					${ru.users}
@@ -50,26 +53,17 @@
 			</td>
 			<td>
 				<a href="${pageContext.request.contextPath}/system/roles/update/${r.id}"><i></i>编辑</a>
-				<a href="${pageContext.request.contextPath}/system/roles/delete/${r.id}" class="deleteuser"><i></i>删除</a>
+				<a href="${pageContext.request.contextPath}/system/roles/delete/${r.id}" class="deleterole"><i></i>删除</a>
 				<!-- hidden -->
 				<input type="hidden" value="${r.rolename}"/>
+				<c:forEach items="${userRole}" var="ru">
+				<c:if test="${ru.roleId eq r.id}">
+				<input type="hidden" value="${ru.users}"/>
+				</c:if>
+				</c:forEach>
 			</td>
 		</tr>
 		</c:forEach>
 	</table>
 </body>
-
-<script type="text/javascript" src="js/jquery-2.0.0.js"></script>
-<script type="text/javascript">
-$(function(){
-	$(".deleteuser").click(function(){
-		var name = $(this).next(":hidden").val();
-		var flag = confirm("确定删除"+name);
-		if (flag) {
-			return true;
-		}
-		return false;
-	});
-});
-</script>
 </html>
