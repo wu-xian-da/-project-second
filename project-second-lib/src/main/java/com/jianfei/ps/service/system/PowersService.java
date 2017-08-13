@@ -5,10 +5,10 @@
   */
 package com.jianfei.ps.service.system;
 
-import com.jianfei.ps.dao.system.MenusDao;
-import com.jianfei.ps.entity.system.Menus;
+import com.jianfei.ps.dao.system.PowersDao;
+import com.jianfei.ps.entity.system.Powers;
 import com.jianfei.ps.service.base.CrudService;
 
-public class MenusService extends CrudService<MenusDao, Menus> {
+public class PowersService extends CrudService<PowersDao, Powers> {
 
 }

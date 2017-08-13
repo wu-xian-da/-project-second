@@ -5,13 +5,13 @@
   */
 package com.jianfei.ps.entity.common;
 
-public enum Power {
+public enum Crud {
 	
 	INSERT("新增"),UPDATE("编辑"),DELETE("删除"),SELECT("查询");
 	
 	private String name;
 	
-	private Power(String name){
+	private Crud(String name){
 		this.name = name;
 	}
 	

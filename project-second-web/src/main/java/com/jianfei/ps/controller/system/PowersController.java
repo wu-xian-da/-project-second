@@ -8,6 +8,6 @@ package com.jianfei.ps.controller.system;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class MenusController {
+public class PowersController {
 
 }

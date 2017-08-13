@@ -10,18 +10,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import com.jianfei.ps.entity.base.BaseEntity;
-import com.jianfei.ps.entity.common.Power;
+import com.jianfei.ps.entity.common.Crud;
 
 @Getter
 @Setter
 @ToString
-public class Menus extends BaseEntity{
+public class Powers extends BaseEntity{
 	
 	private String menuname;
 	
 	private String buttonname;
 	
-	private Power power;
+	private Crud power;
 	
 	private String permission;
 	

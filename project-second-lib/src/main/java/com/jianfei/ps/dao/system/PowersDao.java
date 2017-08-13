@@ -6,8 +6,8 @@
 package com.jianfei.ps.dao.system;
 
 import com.jianfei.ps.dao.base.CrudDao;
-import com.jianfei.ps.entity.system.Menus;
+import com.jianfei.ps.entity.system.Powers;
 
-public interface MenusDao extends CrudDao<Menus>{
+public interface PowersDao extends CrudDao<Powers>{
 
 }
