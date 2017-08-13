@@ -86,6 +86,12 @@ public class UsersController{
 			return "system/users/form";
 		}
 		int result = usersService.update(users);
+		
+		this.userRoleSerivce.delete(id);
+		for (Integer roleId : users.getRoleId()) {
+			this.usersService.insertUserRoleId(id, roleId);
+		}
+		
 		if (result > 0) {
 			System.out.println("更新成功");
 		} else {
@@ -110,7 +116,7 @@ public class UsersController{
 	@RequestMapping
 	public String list(Model model,Users users){
 		System.out.println(users); 
-		model.addAttribute("users",this.usersService.findAll());
+		model.addAttribute("users",this.usersService.findCondition(users));
 		this.setModel(model);
 		return "system/users/list";
 	}

@@ -14,18 +14,6 @@
 		a.ip ip
 	</sql>
 	
-	<!-- <resultMap type="com.jianfei.ps.entity.system.Users" id="roleMap">
-		<id property="id" column="id"/>
-		<result property="nickname" column="nickname"/>
-		<collection column="role_id" property="roles" ofType="string" select="findRoleByRoleId"></collection>
-	</resultMap> -->
-	
-	<!-- <resultMap type="com.jianfei.ps.entity.system.Users" id="userMap">
-		<id property="id" column="id"/>
-		<result property="nickname" column="nickname"/>
-		<collection column="user_id" property="userId" ofType="int" select="findUserId"></collection>
-	</resultMap> -->
-	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_users (username,password,nickname,gender,age,create_time)
 		values (#{username},#{password},#{nickname},#{gender},#{age},#{createTime})
@@ -36,6 +24,7 @@
 		insert into sys_user_role (user_id,role_id) values (#{0},#{1})
 	</insert>
 	
+	<!-- 登录修改登录时间及IP -->
 	<update id="updateLoginTimeAndIp">
 		update sys_users a set a.login_time = #{loginTime},a.ip = #{ip} where a.id = #{id}
 	</update>
@@ -65,11 +54,13 @@
 		FROM sys_users a WHERE a.id = #{id}
 	</select>
 	
+	<!-- 根据昵称查询 -->
 	<select id="findUsersByNickname" resultType="com.jianfei.ps.entity.system.Users" >
 		SELECT <include refid="userColumns"></include>
 		FROM sys_users a WHERE a.nickname = #{nickname}
 	</select>
 	
+	<!-- 条件查询 -->
 	<select id="findCondition" resultType="com.jianfei.ps.entity.system.Users">
 		select <include refid="userColumns" />,
 		r.role_name AS "role.rolename"
@@ -84,12 +75,4 @@
     	order by a.id asc , a.gender asc
 	</select>
 	
-	<select id="findUserId">
-		select * from sys_user_role ur
-		ORDER BY ur.id asc
-	</select>
-	
-	<select id="findRoleByRoleId" resultType="string">
-		select r.role_name from sys_roles r where r.id = #{role_id}
-	</select>
 </mapper>

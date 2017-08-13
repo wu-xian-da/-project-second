@@ -28,7 +28,6 @@ public class RolesController {
 	private UserRoleService userRoleService;
 	
 	private void setModel (Model model) {
-		model.addAttribute("roles",rolesService.findAll());
 		model.addAttribute("userRole",userRoleService.findAllUserId());
 	}
 	
@@ -92,7 +91,7 @@ public class RolesController {
 
 	@RequestMapping
 	public String list(Model model,Roles roles){
-		model.addAttribute("page",this.rolesService.findAll());
+		model.addAttribute("roles",this.rolesService.findCondition(roles));
 		this.setModel(model);
 		return "system/roles/list";
 	}

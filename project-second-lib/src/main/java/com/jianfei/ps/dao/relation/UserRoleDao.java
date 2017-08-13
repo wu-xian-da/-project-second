@@ -11,13 +11,6 @@ import com.jianfei.ps.dao.base.CrudDao;
 import com.jianfei.ps.entity.relation.UserRole;
 
 public interface UserRoleDao extends CrudDao<UserRole> {
-
-	/**
-	 * 批量插入数据
-	 * @param entitys
-	 * @return
-	 */
-	public int insertBatch(List<UserRole> userRole);
 	
 	/***
 	 * 查角色ID

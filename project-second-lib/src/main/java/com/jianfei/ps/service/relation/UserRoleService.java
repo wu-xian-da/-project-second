@@ -20,10 +20,6 @@ public class UserRoleService extends CrudService<UserRoleDao, UserRole> {
 	@Autowired
 	private UserRoleDao userRoleDao;
 	
-	public int insertBatch(List<UserRole> userRole){
-		return this.userRoleDao.insertBatch(userRole);
-	}
-	
 	/***
 	 * 查角色ID
 	 * @return

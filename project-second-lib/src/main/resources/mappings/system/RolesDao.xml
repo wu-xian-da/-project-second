@@ -2,12 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jianfei.ps.dao.system.RolesDao">
 	
-	<resultMap id="roleMap" type="com.jianfei.ps.entity.system.Roles">
-		<id property="id" column="id" />
-		<result property="rolename" column="role_name" />
-		<collection column="id" property="users" ofType="string" select="findUserByRoleId"/>
-	</resultMap>
-	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_roles (role_name,counts) values (#{rolename},#{counts})
 	</insert>
@@ -32,17 +26,15 @@
 		ORDER BY r.id asc
 	</select>
 	
-	<select id="findUserByRoleId" resultType="string">
-		select nickname from sys_users where role_id = #{id}
-	</select>
-	
+	<!-- 条件查询 -->
 	<select id="findCondition" resultType="com.jianfei.ps.entity.system.Roles">
-		select r.id,r.role_name from sys_roles r 
+		select * from sys_roles r 
 		where 1=1
 		<if test="rolename != null and rolename != '' ">and r.role_name like CONCAT ('%',#{rolename},'%')</if>
 		ORDER BY r.id asc
 	</select>
 	
+	<!-- 根据角色名称查询Roles -->
 	<select id="findRolesByRolename" resultType="com.jianfei.ps.entity.system.Roles">
 		select * from sys_roles where role_name = #{rolename}
 	</select>

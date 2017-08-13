@@ -17,12 +17,12 @@
 </style>
 </head>
 <body>
-	<form method="post" action="/roles">
+	<form method="post" action="${pageContext.request.contextPath}/system/roles">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td width="100px">条件检索</td>
             <td width="900px">角色名称：<input type="text" name="rolename" style="width: 200px"/></td>
-            <td>&nbsp;&nbsp;<input  type="submit" value="查询" style="width:50px"/></td>
+            <td>&nbsp;&nbsp;<input  type="submit" name="submit" value="查询" style="width:50px"/></td>
             <td>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/system/roles/insert"><input  type="button" value="添加" style="width:50px"/></a></td>            
           </tr>
         </table>
