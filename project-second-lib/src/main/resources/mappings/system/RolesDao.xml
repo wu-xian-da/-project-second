@@ -32,10 +32,16 @@
 		where 1=1
 		<if test="rolename != null and rolename != '' ">and r.role_name like CONCAT ('%',#{rolename},'%')</if>
 		ORDER BY r.id asc
+		limit #{pn},#{ps}
 	</select>
 	
 	<!-- 根据角色名称查询Roles -->
 	<select id="findRolesByRolename" resultType="com.jianfei.ps.entity.system.Roles">
 		select * from sys_roles where role_name = #{rolename}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from sys_roles
 	</select>
 </mapper>

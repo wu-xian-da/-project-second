@@ -73,6 +73,12 @@
         <if test="null != beginCreateTime and '' != beginCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
         <if test="null != endCreateTime and '' != endCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
     	order by a.id asc , a.gender asc
+    	limit #{pn},#{ps}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from sys_users
 	</select>
 	
 </mapper>

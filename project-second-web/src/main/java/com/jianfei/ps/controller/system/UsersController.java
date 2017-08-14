@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.ps.entity.common.Gender;
-import com.jianfei.ps.entity.system.Roles;
 import com.jianfei.ps.entity.system.Users;
-import com.jianfei.ps.entity.relation.UserRole;
 import com.jianfei.ps.service.relation.UserRoleService;
 import com.jianfei.ps.service.system.RolesService;
 import com.jianfei.ps.service.system.UsersService;
@@ -40,6 +38,7 @@ public class UsersController{
 		model.addAttribute("gender",Gender.values());
 		model.addAttribute("roles",rolesService.findAll());
 		model.addAttribute("userRole",userRoleSerivce.findAllRoleId());
+		model.addAttribute("page",new Users());
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
@@ -116,8 +115,23 @@ public class UsersController{
 
 	@RequestMapping
 	public String list(Model model,Users users){
-		System.out.println(users); 
+		//页面传输的pn,ps
+		users.setPn(users.pn*users.ps);
+		users.setPs(users.ps);
+		//分页,条件,查询所有
 		model.addAttribute("users",this.usersService.findCondition(users));
+		//总记录条数
+		int totalRecord = usersService.findCount();
+		model.addAttribute("totalRecord",totalRecord);
+		//分页的页数
+		int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
+		model.addAttribute("pageNo",pageNo);
+		//上一页的数值变化
+		model.addAttribute("bianPageShang",users.pn/users.ps-1);
+		//下一页的数值变化
+		model.addAttribute("bianPageXia",users.pn/users.ps+1);
+		
+		System.out.println(users.pn+"===");
 		this.setModel(model);
 		return "system/users/list";
 	}

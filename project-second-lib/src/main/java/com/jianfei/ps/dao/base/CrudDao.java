@@ -21,6 +21,8 @@ public interface CrudDao<T> extends BaseDao {
 	
 	public List<T> findAll();
 	
+	public int findCount();
+	
 	/***
 	 * 条件查询
 	 * @param entity

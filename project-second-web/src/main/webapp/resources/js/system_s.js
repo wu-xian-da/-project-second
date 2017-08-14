@@ -137,7 +137,7 @@ $(function(){
 	//上一页按钮限制
 	$("#shangyiye").click(function(){
 		var pns = $("#pagePnShang").val();
-		if (pns<=0) {
+		if (pns<0) {
 			return false;
 		}
 		return true;

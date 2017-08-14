@@ -42,6 +42,10 @@ public abstract class CrudService<D extends CrudDao<T>,T extends BaseEntity> ext
 		return this.dao.findAll();
 	}
 	
+	public int findCount(){
+		return this.dao.findCount();
+	}
+	
 	public List<T> findCondition(T entity){
 		return this.dao.findCondition(entity);
 	}

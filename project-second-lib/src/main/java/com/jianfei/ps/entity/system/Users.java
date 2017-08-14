@@ -16,6 +16,7 @@ import lombok.ToString;
 
 import com.jianfei.ps.entity.base.BaseEntity;
 import com.jianfei.ps.entity.common.Gender;
+import com.jianfei.ps.entity.common.Page;
 
 @Getter
 @Setter

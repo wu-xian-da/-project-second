@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath}resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
 <title>用户列表</title>
 <style>
 	.td{
@@ -54,19 +56,15 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<table width="1200px;">
+		<tr>
+		<td>共条数据|每页显示条</td>
+		<td width="35px;"><a href="">首页</a></td>
+		<td width="50px;"><a href="">上一页</a></td>
+		<td></td>
+		<td width="50px;"><a href="">下一页</a></td>
+		<td width="35px;"><a href="">末页</a></td>
+		</tr>
+	</table>
 </body>
-
-<script type="text/javascript" src="js/jquery-2.0.0.js"></script>
-<script type="text/javascript">
-$(function(){
-	$(".deleteuser").click(function(){
-		var name = $(this).next(":hidden").val();
-		var flag = confirm("确定删除"+name);
-		if (flag) {
-			return true;
-		}
-		return false;
-	});
-});
-</script>
 </html>

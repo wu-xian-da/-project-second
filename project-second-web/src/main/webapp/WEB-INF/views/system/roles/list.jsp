@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systems.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
 <title>用户列表</title>
 <style>
 	.td{
@@ -33,11 +33,11 @@
 	<hr/>
 	<table  border="1"  class="td" width="1200px" style="font-size: 8px;">
 		<tr>
-			<td>序号</td>
-			<td>角色名称</td>
-			<td>描述</td>
+			<td width="50px;">序号</td>
+			<td width="200px;">角色名称</td>
+			<td width="200px;">描述</td>
 			<td>管理用户</td>
-			<td>管理</td>
+			<td width="100px;">管理</td>
 		</tr>
 		<c:forEach items="${roles}" var="r" >
 		<tr>
@@ -65,5 +65,41 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<table width="1200px;" style="font-size: 8px;" class="td">
+		<tr>
+		<td align="left">共${totalRecord}条数据|每页面记录${page.pageSize}条数据</td>
+		<!-- 首页 -->
+		<td width="35px;"><a href="${pageContext.request.contextPath}/system/roles?pn=0&ps=${page.pageSize}">首页</a></td>
+		<!-- 上一页 -->
+		<td width="50px;">
+		<a id="shangyiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageShang}&ps=${page.pageSize}">上一页
+		<input id="pagePnShang" type="hidden" name="pn" value="${bianPageShang}"/>
+		</a>
+		</td>
+		<!-- 页面的页数数字 -->
+		<td align="center">
+			<c:forEach begin="0" end="${pageNo-1}" step="1" var="pageIndex">
+				<a <c:if test="${0 == pageIndex}">class="active"</c:if>
+				href="${pageContext.request.contextPath}/system/roles?pn=${pageIndex}&ps=${page.pageSize}">${pageIndex+1}</a>
+			</c:forEach>	
+		</td>
+		<!-- 下一页 -->
+		<td width="50px;">
+		<a id="xiayiye" href="${pageContext.request.contextPath}/system/roles?pn=${bianPageXia}&ps=${page.pageSize}">
+		<input id="pagePnXia" type="hidden" name="pn" value="${bianPageXia}"/>
+		<input id="totalPage" type="hidden" name="pn" value="${pageNo}"/>下一页</a>
+		</td>
+		<!-- 末页 -->
+		<td width="35px;"><a href="${pageContext.request.contextPath}/system/roles?pn=${pageNo-1}&ps=${page.pageSize}">末页</a></td>
+		</tr>
+	</table>
 </body>
+<script type="text/javascript">
+	//页面跳转
+	$(function(){
+		$("#page_ps_select").change(function(){
+			window.location.href = '${pageContext.request.contextPath}/system/roles?ps='+$(this).val();
+		});
+	});
+</script>
 </html>

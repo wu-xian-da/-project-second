@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.ps.entity.system.Roles;
+import com.jianfei.ps.entity.system.Users;
 import com.jianfei.ps.service.relation.UserRoleService;
 import com.jianfei.ps.service.system.RolesService;
 
@@ -29,6 +30,7 @@ public class RolesController {
 	
 	private void setModel (Model model) {
 		model.addAttribute("userRole",userRoleService.findAllUserId());
+		model.addAttribute("page",new Roles());
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
@@ -91,7 +93,22 @@ public class RolesController {
 
 	@RequestMapping
 	public String list(Model model,Roles roles){
+		//页面传输的pn,ps
+		roles.setPn(roles.pn*roles.ps);
+		roles.setPs(roles.ps);
 		model.addAttribute("roles",this.rolesService.findCondition(roles));
+		
+		//总记录条数
+		int totalRecord = rolesService.findCount();
+		model.addAttribute("totalRecord",totalRecord);
+		//分页的页数
+		int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
+		model.addAttribute("pageNo",pageNo);
+		//上一页的数值变化
+		model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
+		//下一页的数值变化
+		model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
+		
 		this.setModel(model);
 		return "system/roles/list";
 	}
