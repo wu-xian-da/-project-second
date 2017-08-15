@@ -64,4 +64,8 @@
 	<select id="findCount" resultType="int">
 		select count(*) from sys_menus
 	</select>
+	
+	<select id="findMenusByPermission" resultType="com.jianfei.ps.entity.system.Menus">
+		select <include refid="MenuColumns"/> from sys_menus m where m.permission = #{permission}
+	</select>
 </mapper>

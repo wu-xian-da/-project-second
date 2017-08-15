@@ -28,8 +28,12 @@ public class MenusController {
 	private RoleMenuService roleMenuService;
 	
 	private void setModel(Model model){
+		//菜单枚举
 		model.addAttribute("type",MBType.values());
+		//分页操作
 		model.addAttribute("page",new Menus());
+		//角色与权限关联
+		model.addAttribute("rolename",this.roleMenuService.findRolesRoleId());
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
@@ -40,6 +44,11 @@ public class MenusController {
 	
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public String insert(Menus menus ,Model model){
+		Menus menu = this.menusService.findMenusByPermission(menus.getPermission());
+		if (menu != null) {
+			System.out.println("权限标识已经存在,请更换!");
+			return "system/menus/form";
+		}
 		int result = this.menusService.insert(menus);
 		if (result <= 0) {
 			System.out.println("保存权限失败");
@@ -58,6 +67,11 @@ public class MenusController {
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
 	public String update(@PathVariable("id") int id,Menus menus,Model model){
+		Menus menu = this.menusService.findMenusByPermission(menus.getPermission());
+		if (menu != null && menu.getId() != id) {
+			System.out.println("权限标识已经存在,请更换!");
+			return "system/menus/form";
+		}
 		int result = this.menusService.update(menus);
 		if (result <= 0) {
 			System.out.println("修改权限失败");

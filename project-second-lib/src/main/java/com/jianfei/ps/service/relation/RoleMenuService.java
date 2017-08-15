@@ -23,4 +23,8 @@ public class RoleMenuService extends CrudService<RoleMenuDao, RoleMenu> {
 	public List<RoleMenu> findRoleByRoleId(int id){
 		return this.roleMenuDao.findRoleByRoleId(id);
 	}
+	
+	public List<RoleMenu> findRolesRoleId(){
+		return this.roleMenuDao.findRolesRoleId();
+	}
 }

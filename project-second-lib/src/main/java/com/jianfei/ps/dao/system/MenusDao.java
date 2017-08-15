@@ -23,4 +23,6 @@ public interface MenusDao extends CrudDao<Menus>{
 	 * @return
 	 */
 	public List<Menus> findButtonByType();
+	
+	public Menus findMenusByPermission(String permission);
 }

@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sys_urm.js"></script>
 <title>用户列表</title>
 <style>
 	.td{

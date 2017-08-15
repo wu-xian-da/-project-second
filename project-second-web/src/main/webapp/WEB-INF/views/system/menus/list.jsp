@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sys_urm.js"></script>
 <title>用户列表</title>
 <style>
 	.td{
@@ -43,13 +43,26 @@
 			<td>${m.name}</td>
 			<td>${m.permission}</td>
 			<td>${m.sort}</td>
-			<td></td>
+			<td align="left"  class="menuclass">
+				<c:forEach items="${rolename}" var="rn">
+					<c:if test="${rn.menuId eq m.id}">
+						${rn.roles}
+					</c:if>
+					<c:if test="${rn.buttonId eq m.id}">
+						${rn.roles}
+					</c:if>
+				</c:forEach>
+			</td>
 			<td>
 				<a href="${pageContext.request.contextPath}/system/menus/update/${m.id}"><i></i>编辑</a>
 				<a href="${pageContext.request.contextPath}/system/menus/delete/${m.id}" class="deletemenu"><i></i>删除</a>
 				<!-- hidden -->
 				<input type="hidden" value="${m.name}"/>
-				<input type="hidden" value=""/>
+				<!-- hidden角色与权限的关联 -->
+				<c:forEach items="${rolename}" var="ruhidden">
+					<c:if test="${ruhidden.menuId eq m.id}"><input type="hidden" value="${ruhidden.roles}"/></c:if>
+					<c:if test="${ruhidden.buttonId eq m.id}"><input type="hidden" value="${ruhidden.roles}"/></c:if>
+				</c:forEach>
 			</td>
 		</tr>
 		</c:forEach>

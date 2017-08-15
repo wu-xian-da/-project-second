@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sys_urm.js"></script>
 <style type="text/css">
 	.td1{
 		width: 80px;text-align: right;

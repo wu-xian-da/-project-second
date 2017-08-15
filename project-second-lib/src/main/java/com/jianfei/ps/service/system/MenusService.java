@@ -35,5 +35,9 @@ public class MenusService extends CrudService<MenusDao, Menus> {
 	public List<Menus> findButtonByType(){
 		return this.menusDao.findButtonByType();
 	}
+	
+	public Menus findMenusByPermission(String permission){
+		return this.menusDao.findMenusByPermission(permission);
+	}
 
 }

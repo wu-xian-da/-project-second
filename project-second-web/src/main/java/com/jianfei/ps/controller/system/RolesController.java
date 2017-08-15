@@ -5,9 +5,6 @@
   */
 package com.jianfei.ps.controller.system;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jianfei.ps.entity.relation.RoleMenu;
 import com.jianfei.ps.entity.system.Roles;
 import com.jianfei.ps.service.relation.RoleMenuService;
 import com.jianfei.ps.service.relation.UserRoleService;
 import com.jianfei.ps.service.system.MenusService;
 import com.jianfei.ps.service.system.RolesService;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
 
 @Controller
@@ -41,9 +36,13 @@ public class RolesController {
 	private RoleMenuService roleMenuService;
 	
 	private void setModel (Model model) {
+		//用户与角色关联
 		model.addAttribute("userRole",userRoleService.findAllUserId());
+		//分页操作
 		model.addAttribute("page",new Roles());
+		//根据类型菜单查询权限
 		model.addAttribute("menu",menusService.findMenusByType());
+		//根据类型按钮查询权限
 		model.addAttribute("button",menusService.findButtonByType());
 		
 	}
@@ -68,10 +67,10 @@ public class RolesController {
 			Roles roleid = this.rolesService.findRolesByRolename(roles.getRolename());
 			//接收页面传参menubutton
 			for (String roleMenuId : roles.getMenubutton()) {
-				//添加角色与权限的关联
+				//添加角色与权限的关联 
 				this.rolesService.insertRoleMenu(roleid.getId(), 
 				Integer.parseInt(roleMenuId.substring(0, roleMenuId.indexOf("-"))),
-				Integer.parseInt(roleMenuId.substring(roleMenuId.indexOf("-")+1)));
+				Integer.parseInt(roleMenuId.substring(roleMenuId.indexOf("-")+1)));//字符串指定取值,转换成int型
 					
 				
 			}
@@ -88,28 +87,29 @@ public class RolesController {
 		//根据角色ID查询角色
 		model.addAttribute("roles",rolesService.findById(id));
 		//根据角色ID查询角色与权限之间的关联
-		/*List<RoleMenu> rolemenu = roleMenuService.findRoleByRoleId(id);
-		Iterator<RoleMenu> rmit = rolemenu.iterator();
-		while (rmit.hasNext()) {
-			RoleMenu rmlist = (RoleMenu) rmit.next();
-			System.out.println(rmlist);
-			model.addAttribute("menuId",rmlist.getMenuId());
-			model.addAttribute("buttonId",rmlist.getButtonId());
-		}*/
 		model.addAttribute("menubutton",roleMenuService.findRoleByRoleId(id));
 		return "system/roles/form";
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
 	public String update(@PathVariable("id") int id,Roles roles,Model model) {
-		System.out.println(roles);
+		//根据角色名称查询角色是否已经存在
 		Roles role = this.rolesService.findRolesByRolename(roles.getRolename());
-		System.out.println(role);
+		//判断角色名称已经存在及ID是否是与修改的ID相同
 		if (role != null && role.getId() != id) {
 			System.out.println("更新的角色名称已经存在,请更换");
 			return "system/roles/form";
 		}
+		//修改角色
 		int result = rolesService.update(roles);
+		//修改角色与权限的关系,先删除后添加
+		this.roleMenuService.delete(id);
+		for (String rolemenuId : roles.getMenubutton()) {
+			this.rolesService.insertRoleMenu(id, 
+			Integer.parseInt(rolemenuId.substring(0, rolemenuId.indexOf("-"))),
+			Integer.parseInt(rolemenuId.substring(rolemenuId.indexOf("-")+1)));//字符串指定取值,转换成int型
+		}
+		
 		if (result > 0) {
 			System.out.println("更新成功");
 		} else {

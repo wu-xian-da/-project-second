@@ -138,7 +138,7 @@ $(function(){
 	$(".deletemenu").click(function(){
 		var name = $(this).next(":hidden").val();
 		var menu = $(this).next(":hidden").next(":hidden").val();
-		if (menu != '') {
+		if (menu != undefined) {
 			alert("权限已经关联角色,无法删除");
 		}else {
 			var flag = confirm("确定删除："+name);
