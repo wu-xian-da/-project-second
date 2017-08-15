@@ -4,37 +4,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<title>Insert title here</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/system_s.js"></script>
+<title>菜单</title>
+<style type="text/css">
+	.td1{
+		width: 80px;text-align: right;
+	}
+	.tr1{
+		height: 50px;
+	}
+</style>
 </head>
 <body>
 	<div>
-		<h2>${empty users.id ? "新增" : "编辑" }用户</h2><hr/>
-		<form method="post">
-		<input type="hidden" name="id" value="${users.id }">
-		<table>
-			<tr><td>姓名：</td><td><input type="text" name="username" value="${users.username}" placeholder="姓名"></td></tr>
-			<tr><td>密码：</td><td><input type="password" name="password" value="${users.password}" placeholder="密码"></td></tr>
-			<tr><td>昵称：</td><td><input type="text" name="nickname" value="${users.nickname}" placeholder="昵称"></td></tr>
-			<tr><td>性别：</td>
+		<h2>${empty menus.id ? "新增" : "编辑" }权限</h2><hr/>
+		<form method="post" onsubmit="return validator(this)">
+		<input type="hidden" name="id" value="${menus.id }">
+		<table width="1100px">
+			<tr class="tr1">
+				<td class="td1">名称：</td>
+				<td><input id="namevalid" type="text" name="name" value="${menus.name}" valid="required"  errmsg="名称不能为空!" placeholder="名称"><span id="errname"></span></td>
+			</tr>
+			<tr class="tr1">
+				<td class="td1">链接：</td>
+				<td><input id="namevalid" type="text" name="href" value="${menus.href}" valid="required"  errmsg="名称不能为空!" placeholder="名称"><span id="errhref"></span></td>
+			</tr>
+			<tr class="tr1">
+				<td class="td1">权限标识：</td>
+				<td><input id="permissionvalid" type="text" name="permission" value="${menus.permission}"  valid="required"  errmsg="权限标识不能为空!" placeholder="权限标识"><span id="errpermission1"></span><span id="errpermission2"></span></td>
+			</tr>
+			<tr class="tr1">
+				<td class="td1">排序号：</td>
+				<td><input id="sortvalid" type="text" name="sort" value="${menus.sort}"  valid="required"  errmsg="排序号不能为空!" placeholder="排序号"><span id="errsort"></span></td>
+			</tr>
+			<tr class="tr1">
+				<td class="td1">类型：</td>
 				<td>
-				<c:forEach items="${gender}" var="gender">
-					<c:choose>
-						<c:when test="${empty users.id}">
-							<input type="radio" name="gender" value="${gender}" <c:if test="${'NAN' eq gender}">checked="checked"</c:if>/>${gender.name}	
-						</c:when>
-						<c:otherwise>
-							<input type="radio" name="gender" value="${gender}" <c:if test="${users.gender eq gender}">checked="checked"</c:if>/>${gender.name}
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+					<c:forEach items="${type}" var="t">
+						<input type="radio" name="type" value="${t}" <c:if test="${menus.type eq t}">checked="checked"</c:if>/>${t.name}
+					</c:forEach>
 				</td>
 			</tr>
-			<tr><td>年龄：</td><td><input type="text" name="age" value="${users.age}" placeholder="年龄"></td></tr>
-			<tr><td>角色：</td><td></td></tr>
-			<tr>
-				<td><button type="submit">${empty users.id ? "新增" : "编辑"}</button></td>
+			<tr class="tr1">
+				<td  class="td1"><button type="submit" id="menusubmit">${empty menus.id ? "新增" : "编辑"}</button></td>
 				<td><button type="button" onclick="javascript:history.back();">返回</button></td>
 			</tr>
 		</table>

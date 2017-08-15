@@ -5,13 +5,13 @@
   */
 package com.jianfei.ps.entity.common;
 
-public enum Crud {
+public enum MBType {
 	
-	INSERT("新增"),UPDATE("编辑"),DELETE("删除"),SELECT("查询");
+	MENU("菜单"),BUTTON("按钮");
 	
 	private String name;
 	
-	private Crud(String name){
+	private MBType(String name){
 		this.name = name;
 	}
 	

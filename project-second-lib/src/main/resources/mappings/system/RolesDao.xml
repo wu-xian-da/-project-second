@@ -6,6 +6,11 @@
 		insert into sys_roles (role_name,counts) values (#{rolename},#{counts})
 	</insert>
 	
+	<!-- 添加角色与权限的关系 -->
+	<insert id="insertRoleMenu">
+		insert into sys_role_menu (role_id,menu_id,button_id) values (#{0},#{1},#{2})
+	</insert>
+	
 	<update id="update">
 		update sys_roles set 
 		role_name = #{rolename},

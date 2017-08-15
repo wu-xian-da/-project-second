@@ -8,15 +8,12 @@ package com.jianfei.ps.entity.system;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import com.jianfei.ps.entity.base.BaseEntity;
 import com.jianfei.ps.entity.common.Gender;
-import com.jianfei.ps.entity.common.Page;
 
 @Getter
 @Setter
@@ -39,9 +36,9 @@ public class Users extends BaseEntity{
 	
 	private String ip;//登录IP
 	
-    private String beginCreateTime;
+    private String beginCreateTime;//检索时间
     
-    private String endCreateTime;
+    private String endCreateTime;//检索时间
     
     private List<Integer> roleId;
     

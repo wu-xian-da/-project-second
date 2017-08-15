@@ -6,6 +6,8 @@
 package com.jianfei.ps.entity.system;
 
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,4 +23,9 @@ public class Roles extends BaseEntity{
 	
 	private String counts;
 	
+	private List<Integer> menuId;
+	
+	private List<Integer> buttonId;
+	
+	private List<String> menubutton;
 }

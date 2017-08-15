@@ -78,10 +78,12 @@
 		</td>
 		<!-- 页面的页数数字 -->
 		<td align="center">
+			<c:if test="${pageNo > 0}">
 			<c:forEach begin="0" end="${pageNo-1}" step="1" var="pageIndex">
 				<a <c:if test="${0 == pageIndex}">class="active"</c:if>
 				href="${pageContext.request.contextPath}/system/roles?pn=${pageIndex}&ps=${page.pageSize}">${pageIndex+1}</a>
-			</c:forEach>	
+			</c:forEach>
+			</c:if>	
 		</td>
 		<!-- 下一页 -->
 		<td width="50px;">

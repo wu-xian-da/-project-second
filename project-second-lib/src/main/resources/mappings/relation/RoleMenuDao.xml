@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.ps.dao.relation.RoleMenuDao">
+	
+	<select id="findRoleByRoleId" resultType="com.jianfei.ps.entity.relation.RoleMenu">
+		select * from sys_role_menu m where m.role_id = #{roleId} 
+		order by m.id asc
+	</select>
+	
+</mapper>

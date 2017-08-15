@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.ps.dao.system.MenusDao">
+	<sql id="MenuColumns">
+		m.id id,
+		m.name name,
+		m.href href,
+		m.permission permission,
+		m.type type,
+		m.sort sort
+	</sql>
+	
+	<insert id="insert">
+		insert into sys_menus (name,href,permission,type,sort) values(#{name},#{href},#{permission},#{type},#{sort})
+	</insert>
+	
+	<update id="update">
+		update sys_menus set 
+		name = #{name},
+		href = #{href},
+		permission = #{permission},
+		type = #{type},
+		sort = #{sort}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_menus where id = #{id}
+	</delete>
+	
+	<select id="findAll" resultType="com.jianfei.ps.entity.system.Menus">
+		select * from sys_menus m 
+		ORDER BY m.id asc
+	</select>
+	
+	<!-- 根据类型菜单查询权限 -->
+	<select id="findMenusByType" resultType="com.jianfei.ps.entity.system.Menus">
+		select * from sys_menus m where m.type = 0
+		ORDER BY m.id asc , m.sort asc
+	</select>
+	
+	<!-- 根据类型按钮查询权限 -->
+	<select id="findButtonByType" resultType="com.jianfei.ps.entity.system.Menus">
+		select * from sys_menus m where m.type = 1 
+		ORDER BY m.id asc , m.sort asc
+	</select>
+	
+	<!-- 条件,分页,查询 -->
+	<select id="findCondition" resultType="com.jianfei.ps.entity.system.Menus">
+		select <include refid="MenuColumns" />
+	    from sys_menus m
+	    where 1=1
+    	<if test="null != name and '' != name">and m.name like CONCAT('%',#{name},'%')</if>
+	    <if test="null != permission and '' != permission">and m.permission like CONCAT('%',#{permission},'%') </if>
+    	order by m.id asc 
+    	limit #{pn},#{ps}
+	</select>
+	
+	<select id="findById" resultType="com.jianfei.ps.entity.system.Menus">
+		select <include refid="MenuColumns"/> from sys_menus m where m.id = #{id}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from sys_menus
+	</select>
+</mapper>
