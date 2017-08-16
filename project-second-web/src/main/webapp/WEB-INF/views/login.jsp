@@ -5,6 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>login</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/CheckForm.js"></script>
+<script type="text/javascript">
+	var errori ='<%=request.getParameter("error1")%>'
+	if(errori=='nickname'){
+		alert("昵称错误！请重新输入！");
+	}
+	var errori ='<%=request.getParameter("error2")%>'
+	if(errori=='password'){
+		alert("密码错误！请重新输入！");
+	}
+	var errori ='<%=request.getParameter("error3")%>'
+	if(errori=='fail'){
+		alert("登录失败！请重新输入！");
+	}
+</script>
 </head>
 <body>
 <div id="panel">

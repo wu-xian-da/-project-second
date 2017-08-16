@@ -5,6 +5,8 @@
   */
 package com.jianfei.ps.controller.system;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +56,7 @@ public class RolesController {
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public String insert(Roles roles ,Model model){
+	public String insert(Roles roles ,Model model,HttpServletRequest request){
 
 		Roles role = this.rolesService.findRolesByRolename(roles.getRolename());
 		if (role != null) {
@@ -78,7 +80,7 @@ public class RolesController {
 		} else {
 			System.out.println("保存角色失败");
 		}
-		return "redirect:/system/roles";
+		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -92,7 +94,7 @@ public class RolesController {
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
-	public String update(@PathVariable("id") int id,Roles roles,Model model) {
+	public String update(@PathVariable("id") int id,Roles roles,Model model,HttpServletRequest request) {
 		//根据角色名称查询角色是否已经存在
 		Roles role = this.rolesService.findRolesByRolename(roles.getRolename());
 		//判断角色名称已经存在及ID是否是与修改的ID相同
@@ -116,11 +118,11 @@ public class RolesController {
 			System.out.println("更新失败");
 			return "system/roles/form";
 		}
-		return "redirect:/system/roles";
+		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
-	public String delete(@PathVariable("id") int id){
+	public String delete(@PathVariable("id") int id,HttpServletRequest request){
 		int result = this.rolesService.delete(id);
 		if (result > 0) {
 			System.out.println("删除成功");
@@ -128,11 +130,11 @@ public class RolesController {
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/roles";
+		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
 	}
 
 	@RequestMapping
-	public String list(Model model,Roles roles){
+	public String list(Model model,Roles roles,HttpServletRequest request){
 		//页面传输的pn,ps
 		roles.setPn(roles.pn*roles.ps);
 		roles.setPs(roles.ps);
@@ -150,6 +152,7 @@ public class RolesController {
 		model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
 		
 		this.setModel(model);
+		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
 		return "system/roles/list";
 	}
 }

@@ -20,7 +20,7 @@
 	</delete>
 	
 	<select id="findById" resultType="com.jianfei.ps.entity.relation.UserRole">
-		select * from sys_user_role where user_id = #{id}
+		select * from sys_user_role where user_id = #{userId}
 	</select>
 	
 	<!-- 用户jsp查询角色 -->

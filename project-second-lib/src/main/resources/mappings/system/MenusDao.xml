@@ -36,13 +36,13 @@
 	<!-- 根据类型菜单查询权限 -->
 	<select id="findMenusByType" resultType="com.jianfei.ps.entity.system.Menus">
 		select * from sys_menus m where m.type = 0
-		ORDER BY m.id asc , m.sort asc
+		ORDER BY m.sort asc
 	</select>
 	
 	<!-- 根据类型按钮查询权限 -->
 	<select id="findButtonByType" resultType="com.jianfei.ps.entity.system.Menus">
 		select * from sys_menus m where m.type = 1 
-		ORDER BY m.id asc , m.sort asc
+		ORDER BY m.sort asc
 	</select>
 	
 	<!-- 条件,分页,查询 -->

@@ -98,10 +98,10 @@
 										
 										<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;
 										<c:if test="${bian == '2'}">
-											<input type="checkbox" name="menuId" value="${m.id}-${mx.id}">${mx.name}
+											<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
 										</c:if>
 										<c:if test="${bian == '3'}">
-											<input type="checkbox" name="menuId" value="${m.id}-${mx.id}" checked="checked">${mx.name}
+											<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}" checked="checked">${mx.name}
 										</c:if>
 										</td>
 									</c:if>

@@ -62,4 +62,21 @@
         <servlet-name>default</servlet-name>  
         <url-pattern>/resources/*</url-pattern>  
     </servlet-mapping>
+    
+    <servlet>
+   		<servlet-name>gotoleft</servlet-name>
+  		<jsp-file>/WEB-INF/views/jsp/sys_left.jsp</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>gotoleft</servlet-name>
+   		<url-pattern>/sys_left</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+   		<servlet-name>gotobg</servlet-name>
+  		<jsp-file>/WEB-INF/views/jsp/b_g.jsp</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>gotobg</servlet-name>
+   		<url-pattern>/b_g</url-pattern>
+  	</servlet-mapping>
 </web-app>

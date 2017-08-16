@@ -12,7 +12,14 @@ import com.jianfei.ps.entity.relation.RoleMenu;
 
 public interface RoleMenuDao extends CrudDao<RoleMenu> {
 
+	/***
+	 * 根据roleId查询RoleMenu
+	 * @param id
+	 * @return
+	 */
 	public List<RoleMenu> findRoleByRoleId(int id);
 	
 	public List<RoleMenu> findRolesRoleId();
+	
+	public List<RoleMenu> findBUTTON(int roleId);
 }

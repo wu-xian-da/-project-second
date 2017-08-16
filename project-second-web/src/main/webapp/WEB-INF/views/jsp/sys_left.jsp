@@ -1,4 +1,11 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<% 
+String path = request.getContextPath(); 
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+String roleid = request.getParameter("roleid");//用request得到 
+%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,21 +21,20 @@
 </head>
 
 <body>
-
 <div class="container">
-
+	 
 	<div class="leftsidebar_box">
 		<div class="line"></div>
 		<dl class="syetem_management">
 			<dt>系统管理</dt>
 			<dd>
-				<a href="http://localhost:8080/system/users" target="mainFrame">用户管理</a>
+				<a href="http://localhost:8080/system/users?roleId=<%=roleid%>" target="mainFrame">用户管理</a>
 			</dd>
 			<dd>
-				<a href="http://localhost:8080/system/roles" target="mainFrame">角色管理</a>
+				<a href="http://localhost:8080/system/roles?roleId=<%=roleid%>" target="mainFrame">角色管理</a>
 			</dd>
 			<dd>
-				<a href="http://localhost:8080/system/menus" target="mainFrame">权限管理</a>
+				<a href="http://localhost:8080/system/menus?roleId=<%=roleid%>" target="mainFrame">权限管理</a>
 			</dd>
 		</dl>
 	</div>

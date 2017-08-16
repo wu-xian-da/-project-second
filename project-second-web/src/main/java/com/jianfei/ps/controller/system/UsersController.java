@@ -7,6 +7,8 @@ package com.jianfei.ps.controller.system;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.ps.entity.common.Gender;
 import com.jianfei.ps.entity.system.Users;
+import com.jianfei.ps.service.relation.RoleMenuService;
 import com.jianfei.ps.service.relation.UserRoleService;
+import com.jianfei.ps.service.system.MenusService;
 import com.jianfei.ps.service.system.RolesService;
 import com.jianfei.ps.service.system.UsersService;
 
@@ -33,6 +37,12 @@ public class UsersController{
 	
 	@Autowired
 	private UserRoleService userRoleSerivce;
+	
+	@Autowired
+	private RoleMenuService roleMenuService;
+	
+	@Autowired
+	private MenusService menusService;
 	
 	private void setModel (Model model) {
 		//Gender枚举
@@ -52,7 +62,7 @@ public class UsersController{
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public String insert(Users users ,Model model){
+	public String insert(Users users ,Model model,HttpServletRequest request){
 		//根据昵称查询用户是否已经存在
 		Users user = this.usersService.findUsersByNcikname(users.getNickname());
 		if (user != null) {
@@ -68,9 +78,8 @@ public class UsersController{
 		for (Integer roleId : users.getRoleId()) {
 			this.usersService.insertUserRoleId(user_role.getId(), roleId);
 		}
-
 		System.out.println("保存用户成功");
-		return "redirect:/system/users";
+		return "redirect:/system/users?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -82,7 +91,7 @@ public class UsersController{
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
-	public String update(@PathVariable("id") int id,Users users,Model model){
+	public String update(@PathVariable("id") int id,Users users,Model model,HttpServletRequest request){
 		//根据昵称查询用户
 		Users user = this.usersService.findUsersByNcikname(users.getNickname());
 		//判断昵称存在及ID是否相同
@@ -104,11 +113,11 @@ public class UsersController{
 			System.out.println("更新失败");
 			return "error/error";
 		}
-		return "redirect:/system/users";
+		return "redirect:/system/users?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
-	public String delete(@PathVariable("id") int id){
+	public String delete(@PathVariable("id") int id,HttpServletRequest request){
 		int result = this.usersService.delete(id);
 		this.userRoleSerivce.delete(id);
 		if (result > 0) {
@@ -117,11 +126,11 @@ public class UsersController{
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/users";
+		return "redirect:/system/users?roleId="+request.getParameter("roleId");
 	}
 
 	@RequestMapping
-	public String list(Model model,Users users){
+	public String list(Model model,Users users ,HttpServletRequest request){
 		//页面传输的pn,ps
 		users.setPn(users.pn*users.ps);
 		users.setPs(users.ps);
@@ -138,7 +147,8 @@ public class UsersController{
 		//下一页的数值变化
 		model.addAttribute("bianPageXia",users.pn/users.ps+1);
 		
-		this.setModel(model);
+		this.setModel(model);//
+		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
 		return "system/users/list";
 	}
 }

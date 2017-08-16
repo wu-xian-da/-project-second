@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% 
+String path = request.getContextPath(); 
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+String roleid = request.getParameter("roleId");//用request得到 
+%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,6 +28,8 @@
 	<form method="post">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
+            <c:forEach items="${button_id}" var="b">
+            <c:if test="${b.buttons == '[users:select]'}">
           	<td width="100px">条件检索</td>
             <td width="150px">姓名：<input type="text" name="username" style="width: 50px"/></td>
             <td width="150px">昵称：<input type="text" name="nickname" style="width: 50px"/></td>
@@ -38,7 +45,13 @@
             <td align="center" width="35px">至</td>
             <td align="left"><input type="text" name="endCreateTime" style="width: 100px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
             <td>&nbsp;&nbsp;<input  type="submit" value="查询" style="width:50px"/></td>
-            <td>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/system/users/insert"><input  type="button" value="添加" style="width:50px"/></a></td>            
+            </c:if>
+            </c:forEach>
+           	<c:forEach items="${button_id}" var="b">
+          	<c:if test="${b.buttons == '[users:insert]'}">
+          	<td>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/system/users/insert?roleId=<%=roleid%>"><input  type="button" value="添加" style="width:50px"/></a></td>
+          	</c:if>
+          	</c:forEach>  
           </tr>
         </table>
 
@@ -77,8 +90,16 @@
 			<td><fmt:formatDate value="${u.loginTime}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 			<td>${u.ip}</td>
 			<td>
-				<a href="${pageContext.request.contextPath}/system/users/update/${u.id}"><i></i>编辑</a>
-				<a href="${pageContext.request.contextPath}/system/users/delete/${u.id}" class="deleteuser"><i></i>删除</a>
+				<c:forEach items="${button_id}" var="b">
+            		<c:if test="${b.buttons == '[users:update]'}">
+					<a href="${pageContext.request.contextPath}/system/users/update/${u.id}?roleId=<%=roleid%>"><i></i>编辑</a>
+					</c:if>
+				</c:forEach>
+				<c:forEach items="${button_id}" var="b">
+            		<c:if test="${b.buttons == '[users:delete]'}">
+					<a href="${pageContext.request.contextPath}/system/users/delete/${u.id}?roleId=<%=roleid%>" class="deleteuser"><i></i>删除</a>
+					</c:if>
+				</c:forEach>
 				<!-- hidden -->
 				<input type="hidden" value="${u.username}"/>
 			</td>
@@ -89,10 +110,10 @@
 		<tr>
 		<td align="left">共${totalRecord}条数据|每页面记录${page.pageSize}条数据</td>
 		<!-- 首页 -->
-		<td width="35px;"><a href="${pageContext.request.contextPath}/system/users?pn=0&ps=${page.pageSize}">首页</a></td>
+		<td width="35px;"><a href="${pageContext.request.contextPath}/system/users?pn=0&ps=${page.pageSize}&roleId=<%=roleid%>">首页</a></td>
 		<!-- 上一页 -->
 		<td width="50px;">
-		<a id="shangyiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageShang}&ps=${page.pageSize}">上一页
+		<a id="shangyiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageShang}&ps=${page.pageSize}&roleId=<%=roleid%>">上一页
 		<input id="pagePnShang" type="hidden" name="pn" value="${bianPageShang}"/>
 		</a>
 		</td>
@@ -101,18 +122,18 @@
 			<c:if test="${pageNo > 0}">
 			<c:forEach begin="0" end="${pageNo-1}" step="1" var="pageIndex">
 				<a <c:if test="${0 == pageIndex}">class="active"</c:if>
-				href="${pageContext.request.contextPath}/system/users?pn=${pageIndex}&ps=${page.pageSize}">${pageIndex+1}</a>
+				href="${pageContext.request.contextPath}/system/users?pn=${pageIndex}&ps=${page.pageSize}&roleId=<%=roleid%>">${pageIndex+1}</a>
 			</c:forEach>	
 			</c:if>
 		</td>
 		<!-- 下一页 -->
 		<td width="50px;">
-		<a id="xiayiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageXia}&ps=${page.pageSize}">
+		<a id="xiayiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageXia}&ps=${page.pageSize}&roleId=<%=roleid%>">
 		<input id="pagePnXia" type="hidden" name="pn" value="${bianPageXia}"/>
 		<input id="totalPage" type="hidden" name="pn" value="${pageNo}"/>下一页</a>
 		</td>
 		<!-- 末页 -->
-		<td width="35px;"><a href="${pageContext.request.contextPath}/system/users?pn=${pageNo-1}&ps=${page.pageSize}">末页</a></td>
+		<td width="35px;"><a href="${pageContext.request.contextPath}/system/users?pn=${pageNo-1}&ps=${page.pageSize}&roleId=<%=roleid%>">末页</a></td>
 		</tr>
 	</table>
 </body>

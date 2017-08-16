@@ -5,6 +5,8 @@
   */
 package com.jianfei.ps.controller.system;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class MenusController {
 	}
 	
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public String insert(Menus menus ,Model model){
+	public String insert(Menus menus ,Model model,HttpServletRequest request){
 		Menus menu = this.menusService.findMenusByPermission(menus.getPermission());
 		if (menu != null) {
 			System.out.println("权限标识已经存在,请更换!");
@@ -55,7 +57,7 @@ public class MenusController {
 			return "system/menus/form";
 		} 
 		System.out.println("保存权限成功");
-		return "redirect:/system/menus";
+		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
 	}
 
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -66,7 +68,7 @@ public class MenusController {
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
-	public String update(@PathVariable("id") int id,Menus menus,Model model){
+	public String update(@PathVariable("id") int id,Menus menus,Model model,HttpServletRequest request){
 		Menus menu = this.menusService.findMenusByPermission(menus.getPermission());
 		if (menu != null && menu.getId() != id) {
 			System.out.println("权限标识已经存在,请更换!");
@@ -78,11 +80,11 @@ public class MenusController {
 			return "system/menus/form";
 		} 
 		System.out.println("修改权限成功");
-		return "redirect:/system/menus";
+		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
-	public String delete(@PathVariable("id") int id){
+	public String delete(@PathVariable("id") int id,HttpServletRequest request){
 		int result = this.menusService.delete(id);
 		if (result > 0) {
 			System.out.println("删除成功");
@@ -90,11 +92,11 @@ public class MenusController {
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/menus";
+		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
 	}
 	
 	@RequestMapping
-	public String list(Model model,Menus menus){
+	public String list(Model model,Menus menus,HttpServletRequest request){
 		//页面传输的pn,ps
 		menus.setPn(menus.pn*menus.ps);
 		menus.setPs(menus.ps);
@@ -111,6 +113,7 @@ public class MenusController {
 		//下一页的数值变化
 		model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
 		this.setModel(model);
+		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
 		return "system/menus/list";
 	}
 }

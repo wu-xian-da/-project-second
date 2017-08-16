@@ -62,10 +62,8 @@
 	
 	<!-- 条件查询 -->
 	<select id="findCondition" resultType="com.jianfei.ps.entity.system.Users">
-		select <include refid="userColumns" />,
-		r.role_name AS "role.rolename"
+		select <include refid="userColumns"/>
 	    from sys_users a
-	    LEFT JOIN sys_roles r ON a.role_id=r.id
 	    where 1=1
     	<if test="null != username and '' != username">and a.username like CONCAT('%',#{username},'%')</if>
 	    <if test="null != nickname and '' != nickname">and a.nickname like CONCAT('%',#{nickname},'%') </if>

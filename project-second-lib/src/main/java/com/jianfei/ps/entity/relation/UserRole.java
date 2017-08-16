@@ -11,11 +11,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import com.jianfei.ps.entity.base.BaseEntity;
 
 @Setter
 @Getter
+@ToString
 public class UserRole extends BaseEntity{
 	
 	private int userId;
