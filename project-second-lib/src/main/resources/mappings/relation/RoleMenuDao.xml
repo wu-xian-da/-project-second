@@ -18,6 +18,14 @@
 		<collection column="button_id" property="buttons" ofType="string" select="findBUTTONBybuttonId"></collection>
 	</resultMap>
 	
+	<resultMap type="com.jianfei.ps.entity.relation.RoleMenu" id="buttonMap">
+		<id property="id" column="id"/>
+		<result property="roleId" column="role_id"/>
+		<result property="menuId" column="menu_id"/>
+		<result property="buttonId" column="button_id"/>
+		<collection column="menu_id" property="menus" ofType="string" select="findMENUBymenuId"></collection>
+	</resultMap>
+	
 	<delete id="delete">
 		delete from sys_role_menu where role_id = #{roleId}
 	</delete>
@@ -45,5 +53,15 @@
 	<!-- menuMap -->
 	<select id="findBUTTONBybuttonId" resultType="string">
 		select m.permission from sys_menus m where m.id = #{button_id}
+	</select>
+	
+	<!-- 查询按钮 -->
+	<select id="findMENU" resultType="com.jianfei.ps.entity.relation.RoleMenu" resultMap="buttonMap">
+		select * from sys_role_menu where role_id = #{roleId} order by id asc
+	</select>
+	
+	<!-- menuMap -->
+	<select id="findMENUBymenuId" resultType="string">
+		select m.permission from sys_menus m where m.id = #{menu_id}
 	</select>
 </mapper>

@@ -12,10 +12,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>后台管理系统</title>
 </head>
-	
 	<frameset rows="*" cols="*">
 		<frameset rows="*" cols="11%,*">
 			<frame src="http://localhost:8080/sys_left?roleid=${roleid}" noresize="noresize" />
+			 
 			<frame src="http://localhost:8080/b_g?user=${user}"  name="mainFrame" class="bg-welcome" />
 		</frameset>
 	</frameset>

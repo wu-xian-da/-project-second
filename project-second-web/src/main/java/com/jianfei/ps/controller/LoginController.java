@@ -6,7 +6,9 @@
 package com.jianfei.ps.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,9 +64,12 @@ public class LoginController {
 				//先根据用户查询角色
 				UserRole userRole = userRoleService.findById(user.getId());
 
-				//再根据角色查询权限
+				//model 存放roleId
 				model.addAttribute("roleid",userRole.getRoleId());
 				model.addAttribute("user",users.getNickname());
+				//再根据角色查询权限
+				//framset页面之间的跳转传值使用request.getSession().setAttribute();
+				request.getSession().setAttribute("rolemenus", this.roleMenuService.findMENU(userRole.getRoleId()));
 				
 				System.out.println("登录成功");
 				return "jsp/index";

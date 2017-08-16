@@ -22,4 +22,6 @@ public interface RoleMenuDao extends CrudDao<RoleMenu> {
 	public List<RoleMenu> findRolesRoleId();
 	
 	public List<RoleMenu> findBUTTON(int roleId);
+	
+	public List<RoleMenu> findMENU(int roleId);
 }
