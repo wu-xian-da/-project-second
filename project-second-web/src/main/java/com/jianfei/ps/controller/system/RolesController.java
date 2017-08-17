@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.ps.entity.system.Roles;
+import com.jianfei.ps.entity.system.Users;
 import com.jianfei.ps.service.relation.RoleMenuService;
 import com.jianfei.ps.service.relation.UserRoleService;
 import com.jianfei.ps.service.system.MenusService;
@@ -138,18 +139,39 @@ public class RolesController {
 		//页面传输的pn,ps
 		roles.setPn(roles.pn*roles.ps);
 		roles.setPs(roles.ps);
-		model.addAttribute("roles",this.rolesService.findCondition(roles));
 		
-		//总记录条数
-		int totalRecord = rolesService.findCount();
-		model.addAttribute("totalRecord",totalRecord);
-		//分页的页数
-		int pageNo = (totalRecord % new Roles().pageSize) == 0 ? totalRecord / new Roles().pageSize : totalRecord / new Roles().pageSize + 1 ;
-		model.addAttribute("pageNo",pageNo);
-		//上一页的数值变化
-		model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
-		//下一页的数值变化
-		model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
+		
+		//判断页面传参是否为null
+		if (roles.getRolename() == null ) {
+			//总记录条数
+			int totalRecord = rolesService.findCount();
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Roles().pageSize) == 0 ? totalRecord / new Roles().pageSize : totalRecord / new Roles().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
+			
+			model.addAttribute("roleurl","");
+		} else {
+			//总记录条数
+			int totalRecord = rolesService.findCountByT(roles);
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",roles.pn/roles.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",roles.pn/roles.ps+1);
+			
+			model.addAttribute("roleurl","&rolename="+roles.getRolename());
+		}
+		//分页,条件查询,所有查询
+		model.addAttribute("roles",this.rolesService.findCondition(roles));
 		
 		this.setModel(model);
 		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));

@@ -100,18 +100,38 @@ public class MenusController {
 		//页面传输的pn,ps
 		menus.setPn(menus.pn*menus.ps);
 		menus.setPs(menus.ps);
+		
+		if (menus.getName() == null && menus.getPermission() == null) {
+			//总记录条数
+			int totalRecord = menusService.findCount();
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Menus().pageSize) == 0 ? totalRecord / new Menus().pageSize : totalRecord / new Menus().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",menus.pn/menus.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
+			
+			model.addAttribute("menuurl","");
+		} else {
+			//总记录条数
+			int totalRecord = menusService.findCountByT(menus);
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Menus().pageSize) == 0 ? totalRecord / new Menus().pageSize : totalRecord / new Menus().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",menus.pn/menus.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
+			
+			model.addAttribute("menuurl","&name="+menus.getName()+"&permission="+menus.getPermission());
+		}
+		//分页,条件查询,所有查询
 		model.addAttribute("menus",this.menusService.findCondition(menus));
 		
-		//总记录条数
-		int totalRecord = menusService.findCount();
-		model.addAttribute("totalRecord",totalRecord);
-		//分页的页数
-		int pageNo = (totalRecord % new Menus().pageSize) == 0 ? totalRecord / new Menus().pageSize : totalRecord / new Menus().pageSize + 1 ;
-		model.addAttribute("pageNo",pageNo);
-		//上一页的数值变化
-		model.addAttribute("bianPageShang",menus.pn/menus.ps-1);
-		//下一页的数值变化
-		model.addAttribute("bianPageXia",menus.pn/menus.ps+1);
+		
 		this.setModel(model);
 		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
 		return "system/menus/list";

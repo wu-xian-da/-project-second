@@ -68,4 +68,13 @@
 	<select id="findMenusByPermission" resultType="com.jianfei.ps.entity.system.Menus">
 		select <include refid="MenuColumns"/> from sys_menus m where m.permission = #{permission}
 	</select>
+	
+	<select id="findCountByT" resultType="int">
+		select count(*)
+	    from sys_menus m
+	    where 1=1
+    	<if test="null != name and '' != name">and m.name like CONCAT('%',#{name},'%')</if>
+	    <if test="null != permission and '' != permission">and m.permission like CONCAT('%',#{permission},'%') </if>
+    	order by m.id asc 
+	</select>
 </mapper>

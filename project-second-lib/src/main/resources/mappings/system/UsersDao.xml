@@ -79,4 +79,15 @@
 		select count(*) from sys_users
 	</select>
 	
+	<select id="findCountByT" resultType="int">
+		select count(*)
+	    from sys_users a
+	    where 1=1
+    	<if test="null != username and '' != username">and a.username like CONCAT('%',#{username},'%')</if>
+	    <if test="null != nickname and '' != nickname">and a.nickname like CONCAT('%',#{nickname},'%') </if>
+        <if test="null != gender">and a.gender = #{gender}</if>
+        <if test="null != beginCreateTime and '' != beginCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and '' != endCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc , a.gender asc
+	</select>
 </mapper>

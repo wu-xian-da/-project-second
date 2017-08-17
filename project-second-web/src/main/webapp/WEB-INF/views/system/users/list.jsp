@@ -25,25 +25,25 @@ String roleid = request.getParameter("roleId");//用request得到
 </style>
 </head>
 <body>
-	<form method="post">
+	<form method="post" action="${pageContext.request.contextPath}/system/users?roleId=<%=roleid%>">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <c:forEach items="${button_id}" var="b">
             <c:if test="${b.buttons == '[users:select]'}">
           	<td width="100px">条件检索</td>
-            <td width="150px">姓名：<input type="text" name="username" style="width: 50px"/></td>
-            <td width="150px">昵称：<input type="text" name="nickname" style="width: 50px"/></td>
-            <td width="200px">性别：
+            <td width="250px">姓名：<input type="text" name="username" style="width: 150px"/></td>
+            <td width="250px">昵称：<input type="text" name="nickname" style="width: 150px"/></td>
+           <!--  <td width="200px">性别：
             	<select name="gender" >
             		<option value="">全部(单选)</option>
 					<c:forEach items="${gender}" var="sex">
 						<option value="${sex}">${sex.name}</option>
 					</c:forEach>
 				</select>
-			</td>
-            <td width="185px">检索时间：<input type="text" name="beginCreateTime" style="width: 100px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
+			</td> -->
+            <td width="250px">检索时间：<input type="text" name="beginCreateTime" style="width: 150px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
             <td align="center" width="35px">至</td>
-            <td align="left"><input type="text" name="endCreateTime" style="width: 100px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
+            <td align="left"><input type="text" name="endCreateTime" style="width: 150px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
             <td>&nbsp;&nbsp;<input  type="submit" value="查询" style="width:50px"/></td>
             </c:if>
             </c:forEach>
@@ -113,7 +113,7 @@ String roleid = request.getParameter("roleId");//用request得到
 		<td width="35px;"><a href="${pageContext.request.contextPath}/system/users?pn=0&ps=${page.pageSize}&roleId=<%=roleid%>">首页</a></td>
 		<!-- 上一页 -->
 		<td width="50px;">
-		<a id="shangyiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageShang}&ps=${page.pageSize}&roleId=<%=roleid%>">上一页
+		<a id="shangyiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageShang}${userurl}&ps=${page.pageSize}&roleId=<%=roleid%>">上一页
 		<input id="pagePnShang" type="hidden" name="pn" value="${bianPageShang}"/>
 		</a>
 		</td>
@@ -128,7 +128,7 @@ String roleid = request.getParameter("roleId");//用request得到
 		</td>
 		<!-- 下一页 -->
 		<td width="50px;">
-		<a id="xiayiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageXia}&ps=${page.pageSize}&roleId=<%=roleid%>">
+		<a id="xiayiye" href="${pageContext.request.contextPath}/system/users?pn=${bianPageXia}${userurl}&ps=${page.pageSize}&roleId=<%=roleid%>">
 		<input id="pagePnXia" type="hidden" name="pn" value="${bianPageXia}"/>
 		<input id="totalPage" type="hidden" name="pn" value="${pageNo}"/>下一页</a>
 		</td>

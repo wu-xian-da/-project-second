@@ -21,10 +21,14 @@ public interface CrudDao<T> extends BaseDao {
 	
 	public int findCount();
 	
+	public int findCountByT(T entity);
+	
 	/***
 	 * 条件查询
 	 * @param entity
 	 * @return
 	 */
 	public List<T> findCondition(T entity);
+	
+	
 }

@@ -129,23 +129,47 @@ public class UsersController{
 		return "redirect:/system/users?roleId="+request.getParameter("roleId");
 	}
 
+	@SuppressWarnings("unused")
 	@RequestMapping
 	public String list(Model model,Users users ,HttpServletRequest request){
 		//页面传输的pn,ps
 		users.setPn(users.pn*users.ps);
 		users.setPs(users.ps);
+		
+		//判断页面传参是否为null
+		if (users.getUsername() == null && users.getNickname() == null && users.getBeginCreateTime() == null && users.getEndCreateTime() == null ) {
+			//总记录条数
+			int totalRecord = usersService.findCount();
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",users.pn/users.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",users.pn/users.ps+1);
+			
+			model.addAttribute("userurl","");
+		} else {
+			//总记录条数
+			int totalRecord = usersService.findCountByT(users);
+			model.addAttribute("totalRecord",totalRecord);
+			//分页的页数
+			int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
+			model.addAttribute("pageNo",pageNo);
+			
+			//上一页的数值变化
+			model.addAttribute("bianPageShang",users.pn/users.ps-1);
+			//下一页的数值变化
+			model.addAttribute("bianPageXia",users.pn/users.ps+1);
+			
+			model.addAttribute("userurl","&username="+users.getUsername()+"&nickname="+users.getNickname()+
+					"&beginCreateTime="+users.getBeginCreateTime()+"&endCreateTime="+users.getEndCreateTime());
+		}
 		//分页,条件,查询所有
 		model.addAttribute("users",this.usersService.findCondition(users));
-		//总记录条数
-		int totalRecord = usersService.findCount();
-		model.addAttribute("totalRecord",totalRecord);
-		//分页的页数
-		int pageNo = (totalRecord % new Users().pageSize) == 0 ? totalRecord / new Users().pageSize : totalRecord / new Users().pageSize + 1 ;
-		model.addAttribute("pageNo",pageNo);
-		//上一页的数值变化
-		model.addAttribute("bianPageShang",users.pn/users.ps-1);
-		//下一页的数值变化
-		model.addAttribute("bianPageXia",users.pn/users.ps+1);
+		
 		
 		this.setModel(model);//
 		model.addAttribute("button_id",this.roleMenuService.findBUTTON(Integer.parseInt(request.getParameter("roleId"))));
