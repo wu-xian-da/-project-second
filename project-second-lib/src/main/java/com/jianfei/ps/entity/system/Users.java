@@ -40,6 +40,6 @@ public class Users extends BaseEntity{
     
     private String endCreateTime;//检索时间
     
-    private List<Integer> roleId;
+    private List<Integer> roleIds;
     
 }

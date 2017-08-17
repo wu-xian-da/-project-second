@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sys_urm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systemValida.js"></script>
 <style type="text/css">
 	.td1{
 		width: 80px;text-align: right;
@@ -40,7 +40,7 @@
 							<c:if test="${m.type == 'MENU'}">
 							<c:set value="${m.href}" var="href"></c:set>
 								<tr><td>
-								<input type="checkbox" value="${m.id}">${m.name}</td>
+								<!-- <input type="checkbox" name="checkmenus" value="${m.id}">-->${m.name}</td>
 								</tr>
 							</c:if>
 							<!-- 二级 -->
@@ -48,7 +48,7 @@
 							<c:forEach items="${button}" var="mx">
 								<c:if test="${mx.type == 'BUTTON'}">
 									<c:if test="${href == mx.href}">
-										<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;
+										<td width="150px;">&nbsp;&nbsp;
 										<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
 										</td>
 									</c:if>
@@ -73,10 +73,10 @@
 								</c:forEach>
 								
 								<c:if test="${bian == '0'}">
-									<input type="checkbox" value="${m.id}">${m.name}
+									<!-- <input type="checkbox" name="checkmenus" value="${m.id}">-->${m.name}
 								</c:if>
 								<c:if test="${bian == '1'}">
-									<input type="checkbox" value="${m.id}" checked="checked">${m.name}
+									<!-- <input type="checkbox" name="checkmenus" value="${m.id}" checked="checked">-->${m.name}
 								</c:if>
 								
 								</td>
@@ -96,7 +96,7 @@
 											</c:if>
 										</c:forEach>
 										
-										<td width="150px;">&nbsp;&nbsp;&nbsp;&nbsp;
+										<td width="150px;">&nbsp;&nbsp;
 										<c:if test="${bian == '2'}">
 											<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
 										</c:if>

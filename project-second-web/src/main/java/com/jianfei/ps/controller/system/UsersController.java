@@ -75,7 +75,7 @@ public class UsersController{
 		//根据昵称查询用户存在的ID
 		Users user_role = usersService.findUsersByNcikname(users.getNickname());
 		//用户与角色的关联的添加
-		for (Integer roleId : users.getRoleId()) {
+		for (Integer roleId : users.getRoleIds()) {
 			this.usersService.insertUserRoleId(user_role.getId(), roleId);
 		}
 		System.out.println("保存用户成功");
@@ -103,7 +103,7 @@ public class UsersController{
 		int result = usersService.update(users);
 		//修改用户与角色之间的关联,先删除后添加
 		this.userRoleSerivce.delete(id);
-		for (Integer roleId : users.getRoleId()) {
+		for (Integer roleId : users.getRoleIds()) {
 			this.usersService.insertUserRoleId(id, roleId);
 		}
 		

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/sys_urm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systemValida.js"></script>
 <title>用户</title>
 <style type="text/css">
 	.td1{
@@ -48,7 +48,7 @@
 					<c:choose>
 						<c:when test="${empty users.id}">
 						<c:forEach items="${roles}" var="r">
-							<input type="checkbox" name="roleId" value="${r.id}" />${r.rolename}
+							<input type="checkbox" name="roleIds" value="${r.id}" />${r.rolename}
 						</c:forEach>
 						</c:when>
 						
@@ -63,10 +63,10 @@
 						</c:if>
 						</c:forEach>
 						<c:if test="${bian == '0'}">
-							<input type="checkbox" name="roleId" value="${r.id}"/>${r.rolename}
+							<input type="checkbox" name="roleIds" value="${r.id}"/>${r.rolename}
 						</c:if>
 						<c:if test="${bian == '1'}">
-							<input type="checkbox" name="roleId" value="${r.id}" checked="checked"/>${r.rolename}
+							<input type="checkbox" name="roleIds" value="${r.id}" checked="checked"/>${r.rolename}
 						</c:if>
 						</c:forEach>	
 						</c:otherwise>

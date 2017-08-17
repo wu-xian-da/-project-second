@@ -16,7 +16,7 @@ $(function(){
 	//form.jsp
 	//用户必须选择角色
 	$('#usersubmit').on("click", function(){
-		var checkArr = $('input[name=roleId]:checked');
+		var checkArr = $('input[name=roleIds]:checked');
 		if(checkArr.length == 0){
 			alert("-请勾选需要操作的数据");
 			return false;
@@ -126,7 +126,18 @@ $(function(){
 		return false;
 	});
 
+	//角色必须选择权限
+	$('#rolesumbit').on("click", function(){
+		var checkArr1 = $('input[name=checkmenus]:checked');
+		var checkArr2 = $('input[name=menubutton]:checked');
+		alert(checkArr1+"=="+checkArr2)
+		if(checkArr1.length == 0 && checkArr2.length != 0){
+			alert("-请必须勾选需要的菜单");
+			return false;
+		}
+		return true;
 	
+	});
 });
 /***************************************************************************************************
  *************************************      MENU     ***********************************************
