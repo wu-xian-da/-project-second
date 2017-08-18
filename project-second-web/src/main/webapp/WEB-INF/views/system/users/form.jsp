@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systemValida.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systemValidate.js"></script>
 <title>用户</title>
 <style type="text/css">
 	.td1{

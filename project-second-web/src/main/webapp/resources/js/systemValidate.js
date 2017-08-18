@@ -127,7 +127,7 @@ $(function(){
 	});
 
 	//角色必须选择权限
-	$('#rolesumbit').on("click", function(){
+	/*$('#rolesumbit').on("click", function(){
 		var checkArr1 = $('input[name=checkmenus]:checked');
 		var checkArr2 = $('input[name=menubutton]:checked');
 		alert(checkArr1+"=="+checkArr2)
@@ -137,7 +137,7 @@ $(function(){
 		}
 		return true;
 	
-	});
+	});*/
 });
 /***************************************************************************************************
  *************************************      MENU     ***********************************************
