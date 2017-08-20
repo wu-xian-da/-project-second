@@ -125,18 +125,52 @@ $(function(){
 		$("#errrolename").html("角色名称由汉字字母组合")
 		return false;
 	});
-
-	//角色必须选择权限
-	/*$('#rolesumbit').on("click", function(){
-		var checkArr1 = $('input[name=checkmenus]:checked');
-		var checkArr2 = $('input[name=menubutton]:checked');
-		alert(checkArr1+"=="+checkArr2)
-		if(checkArr1.length == 0 && checkArr2.length != 0){
-			alert("-请必须勾选需要的菜单");
-			return false;
-		}
-		return true;
 	
+	//角色选择
+	/*$("#role_form").validate({
+		errorPlacement: function(error,element){
+			error.appendTo(element.parent());
+		}
+	});
+	function Submit(){
+		var checksLen = $('input[type="checkbox"]:checked').length;
+		if(checksLen == 0){
+			alert("-请选择授权信息");
+			return;
+	 	}
+		$("#role_form").submit();
+	}
+	$(function(){
+		$("#role_form").validate({
+			errorPlacement: function(error,element){
+				error.appendTo(element.parent());
+			}
+		});
+		
+		$('input[type="checkbox"]').on('click',function(){
+			var _statusP = $(this).prop("checked");
+			
+			//父节点
+			var parent_v = $(this).data("m");
+			if(parent_v != null && parent_v != '' && _statusP){
+				$('input[value='+parent_v+']').prop("checked", true);
+			}
+			
+			//子节点
+			$('input[data-p='+$(this).val()+']').each(function(){
+				var _statusC = $(this).prop("checked");
+				if(_statusP){
+					if(!_statusC){
+						$(this).click();
+					}
+				}
+				else{
+					if(_statusC){
+						$(this).click();
+					}
+				}
+			});
+	 	});
 	});*/
 });
 /***************************************************************************************************

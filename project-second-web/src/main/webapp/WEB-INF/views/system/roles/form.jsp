@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/FormValid.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/systemValidate.js"></script>
 <style type="text/css">
 	.td1{
@@ -25,7 +26,7 @@
 <body>
 	<div>
 		<h2>${empty roles.id ? "新增" : "编辑" }角色</h2><hr/>
-		<form method="post" onsubmit="return validator(this)">
+		<form method="post" onsubmit="return validator(this)" id="role_form">
 		<input type="hidden" name="id" value="${roles.id}"/>
 		<table>
 			<tr class="tr1"><td class="td1">角色名称：</td><td><input id="rolenamevalid" type="text" name="rolename" value="${roles.rolename}" maxlength="10" valid="required"  errmsg="角色名称不能为空!" placeholder="角色名称"><span id="errrolename"></span></td></tr>
@@ -40,7 +41,7 @@
 							<c:if test="${m.type == 'MENU'}">
 							<c:set value="${m.href}" var="href"></c:set>
 								<tr><td>
-								<!-- <input type="checkbox" name="checkmenus" value="${m.id}">-->${m.name}</td>
+								<input type="checkbox" name="checkmenus" value="${m.id}">${m.name}</td>
 								</tr>
 							</c:if>
 							<!-- 二级 -->
@@ -49,7 +50,7 @@
 								<c:if test="${mx.type == 'BUTTON'}">
 									<c:if test="${href == mx.href}">
 										<td width="150px;">&nbsp;&nbsp;
-										<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
+										<input data-p="${m.id}" type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
 										</td>
 									</c:if>
 								</c:if>
@@ -73,10 +74,10 @@
 								</c:forEach>
 								
 								<c:if test="${bian == '0'}">
-									<!-- <input type="checkbox" name="checkmenus" value="${m.id}">-->${m.name}
+									<input type="checkbox" name="checkmenus" value="${m.id}">${m.name}
 								</c:if>
 								<c:if test="${bian == '1'}">
-									<!-- <input type="checkbox" name="checkmenus" value="${m.id}" checked="checked">-->${m.name}
+									<input type="checkbox" name="checkmenus" value="${m.id}" checked="checked">${m.name}
 								</c:if>
 								
 								</td>
@@ -98,10 +99,10 @@
 										
 										<td width="150px;">&nbsp;&nbsp;
 										<c:if test="${bian == '2'}">
-											<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
+											<input data-p="${m.id}" type="checkbox" name="menubutton" value="${m.id}-${mx.id}">${mx.name}
 										</c:if>
 										<c:if test="${bian == '3'}">
-											<input type="checkbox" name="menubutton" value="${m.id}-${mx.id}" checked="checked">${mx.name}
+											<input data-p="${m.id}" type="checkbox" name="menubutton" value="${m.id}-${mx.id}" checked="checked">${mx.name}
 										</c:if>
 										</td>
 									</c:if>
@@ -115,11 +116,59 @@
 				</td>
 			</tr>
 			<tr class="tr1">
-				<td class="td1"><button id="rolesumbit" type="submit">${empty roles.id ? "新增" : "编辑"}</button></td>
+				<td class="td1"><button id="rolesumbit" type="button" onclick="Submit();">${empty roles.id ? "新增" : "编辑"}</button></td>
 				<td><button type="button" onclick="javascript:history.back();">返回</button></td>
 			</tr>
 		</table>
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+//角色选择
+$("#role_form").validate({
+	errorPlacement: function(error,element){
+		error.appendTo(element.parent());
+	}
+});
+function Submit(){
+	var checksLen = $('input[type="checkbox"]:checked').length;
+	if(checksLen == 0){
+		alert("-请选择授权信息");
+		return;
+ 	}
+	$("#role_form").submit();
+}
+$(function(){
+	$("#role_form").validate({
+		errorPlacement: function(error,element){
+			error.appendTo(element.parent());
+		}
+	});
+	
+	$('input[type="checkbox"]').on('click',function(){
+		var _statusP = $(this).prop("checked");
+		
+		//父节点
+		var parent_v = $(this).data("m");
+		if(parent_v != null && parent_v != '' && _statusP){
+			$('input[value='+parent_v+']').prop("checked", true);
+		}
+		
+		//子节点
+		$('input[data-p='+$(this).val()+']').each(function(){
+			var _statusC = $(this).prop("checked");
+			if(_statusP){
+				if(!_statusC){
+					$(this).click();
+				}
+			}
+			else{
+				if(_statusC){
+					$(this).click();
+				}
+			}
+		});
+ 	});
+});
+</script>
 </html>
